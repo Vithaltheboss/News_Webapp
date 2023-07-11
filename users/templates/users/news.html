@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>News_search</title>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+    {% if user.is_authenticated %}
+            <h1 style="text-align: center;">Welcome {{ user.username }}</h1>
+            <p style="text-align:Right;"><a style="..." href="{% url 'logout' %}" align="right">Logout</a></p>
+            <br>
+            {% if user.is_superuser %}
+            <p style="text-align:Right;">Do you want to visit admin page? <a href="http://127.0.0.1:8000/admin/"> admin page</a></p>
+            {% endif %}
+            <br>
+            <p style="text-align:Center;"><input type="search" placeholder="Search here..." name="search" ></p>
+            <div class="container" align="center" button style="margin:5px"><button>Search</button></div>
+            <div class="container" align="center" button style="margin:5px" onclick="location.reload();"><button>Refresh</button></div>
+            <br>
+    {% endif %}
+    <br>
+    {% if data %}
+        <table border="1px">
+            <tr>
+              <th>Date</th>
+              <th>Title</th>
+            {% for d in data %}
+            <tr>
+              <td>{{d.published}}</td>
+              <td><a href={{d.url}} target="_blank"> {{d.title}}</a></td>
+            </tr>
+            {% endfor %}
+          </table>
+
+    {% else %}
+        <p style="text-align:center;">No data found..</p>
+    {% endif %}
+
+</form>
+</body>
+</html>
